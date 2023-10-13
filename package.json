@@ -17,7 +17,7 @@
   "scripts": {
     "build": "tsc",
     "test": "ts-node node_modules/jasmine/bin/jasmine",
-    "publish": "pnpm run build && pnpm publish"
+    "bump": "pnpm run build && pnpm publish"
   },
   "devDependencies": {
     "@types/jasmine": "^5.1.0",
