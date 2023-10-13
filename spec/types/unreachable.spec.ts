@@ -21,7 +21,7 @@ describe('unreachable', () => {
   });
 
   it('should not throw an error', () => {
-    for (let i = 0; i < 4; i++) expect(() => stringify(i)).toBeTruthy();
+    for (let i = 0; i < 4; i++) expect(stringify(i)).toBeTruthy();
   });
 
   it('should throw an error', () => {

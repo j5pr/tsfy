@@ -4,8 +4,8 @@ describe('Option', () => {
   describe('Some', () => {
     it('should create a Some with a value', () => {
       const some: Option<number> = Some(42);
-      expect(some.isSome()).toBeTrue();
-      expect(some.isNone()).toBeFalse();
+      expect(some.isSome()).toBe(true);
+      expect(some.isNone()).toBe(false);
       expect(some.unwrap()).toBe(42);
     });
 
@@ -31,8 +31,8 @@ describe('Option', () => {
   describe('None', () => {
     it('should create a None', () => {
       const none: Option<number> = None;
-      expect(none.isSome()).toBeFalse();
-      expect(none.isNone()).toBeTrue();
+      expect(none.isSome()).toBe(false);
+      expect(none.isNone()).toBe(true);
       expect(() => none.unwrap()).toThrowError();
     });
 

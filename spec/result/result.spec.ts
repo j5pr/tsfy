@@ -10,12 +10,12 @@ describe('Result', () => {
 
     it('should return true for isOk()', () => {
       const result = Ok(42);
-      expect(result.isOk()).toBeTrue();
+      expect(result.isOk()).toBe(true);
     });
 
     it('should return false for isErr()', () => {
       const result = Ok(42);
-      expect(result.isErr()).toBeFalse();
+      expect(result.isErr()).toBe(false);
     });
 
     it('should unwrap the result value', () => {
@@ -35,12 +35,12 @@ describe('Result', () => {
 
     it('should return None for err()', () => {
       const result = Ok(42);
-      expect(result.err().isNone()).toBeTrue();
+      expect(result.err().isNone()).toBe(true);
     });
 
     it('should return Some for ok()', () => {
       const result = Ok(42);
-      expect(result.ok().isSome()).toBeTrue();
+      expect(result.ok().isSome()).toBe(true);
       expect(result.ok().unwrap()).toEqual(42);
     });
 
@@ -101,12 +101,12 @@ describe('Result', () => {
 
     it('should return false for isOk()', () => {
       const result = Err('error');
-      expect(result.isOk()).toBeFalse();
+      expect(result.isOk()).toBe(false);
     });
 
     it('should return true for isErr()', () => {
       const result = Err('error');
-      expect(result.isErr()).toBeTrue();
+      expect(result.isErr()).toBe(true);
     });
 
     it('should unwrap the error value', () => {
@@ -126,13 +126,13 @@ describe('Result', () => {
 
     it('should return Some for err()', () => {
       const result = Err('error');
-      expect(result.err().isSome()).toBeTrue();
+      expect(result.err().isSome()).toBe(true);
       expect(result.err().unwrap()).toEqual('error');
     });
 
     it('should return None for ok()', () => {
       const result = Err('error');
-      expect(result.ok().isNone()).toBeTrue();
+      expect(result.ok().isNone()).toBe(true);
     });
 
     it('should map the error value', () => {
