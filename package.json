@@ -1,13 +1,10 @@
 {
-  "name": "@cydq/fn",
+  "name": "tsfy",
   "version": "0.1.0",
   "description": "Useful type-safe utility functions and types.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "author": "Brian Shao <brian@ngsh.ca>",
+  "license": "MIT",
+  "repository": "https://github.com/cydq/tsfy",
   "keywords": [
     "typescript",
     "utility",
@@ -15,8 +12,12 @@
     "option",
     "result"
   ],
-  "author": "Brian Shao <brian@ngsh.ca>",
-  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "devDependencies": {
     "@types/node": "^20.8.5",
     "prettier": "^3.0.3",
