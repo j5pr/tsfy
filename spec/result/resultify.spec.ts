@@ -1,5 +1,5 @@
-import { Ok, Err } from './result';
-import { resultify, resultifyAsync } from './resultify';
+import { Ok, Err } from '../../src/result/result';
+import { resultify, resultifyAsync } from '../../src/result/resultify';
 
 describe('resultify', () => {
   it('should return Ok if the function does not throw an error', () => {

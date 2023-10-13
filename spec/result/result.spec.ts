@@ -1,4 +1,4 @@
-import { Ok, Err } from './result';
+import { Ok, Err } from '../../src/result/result';
 
 describe('Result', () => {
   describe('Ok', () => {

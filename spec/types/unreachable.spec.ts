@@ -1,4 +1,4 @@
-import { unreachable } from './unreachable';
+import { unreachable } from '../../src/types/unreachable';
 
 describe('unreachable', () => {
   function stringify(n: number): string {

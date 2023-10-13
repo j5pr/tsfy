@@ -1,4 +1,4 @@
-import { pipe } from './pipe';
+import { pipe } from '../../src/types/pipe';
 
 describe('pipe', () => {
   it('should return a Pipe object', () => {
