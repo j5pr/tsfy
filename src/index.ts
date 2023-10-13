@@ -1,7 +1,7 @@
 export * from './option/option';
 
-export * from './result/expect';
 export * from './result/result';
+export * from './result/resultify';
 
 export * from './types/phantom';
 export * from './types/pipe';

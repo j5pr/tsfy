@@ -16,11 +16,15 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ts-node node_modules/jasmine/bin/jasmine",
+    "publish": "pnpm run build && pnpm publish"
   },
   "devDependencies": {
+    "@types/jasmine": "^5.1.0",
     "@types/node": "^20.8.5",
+    "jasmine": "^5.1.0",
     "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
 }

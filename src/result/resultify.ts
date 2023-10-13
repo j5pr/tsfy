@@ -22,7 +22,7 @@ export function resultify<T extends (...args: any[]) => any, E = unknown>(
  */
 export function resultifyAsync<T extends (...args: any[]) => Promise<any>, E = unknown>(
   fn: T,
-): (...args: Parameters<T>) => Promise<Result<ReturnType<T>, E>> {
+): (...args: Parameters<T>) => Promise<Result<Awaited<ReturnType<T>>, E>> {
   return async function () {
     try {
       const result = await fn(...arguments);
