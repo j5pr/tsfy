@@ -1,6 +1,6 @@
 {
   "name": "tsfy",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Useful type-safe utility functions and types.",
   "author": "Brian Shao <brian@ngsh.ca>",
   "license": "MIT",
@@ -17,7 +17,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "bump": "pnpm run build && pnpm publish"
+    "bump": "pnpm run build && pnpm run test && pnpm publish"
   },
   "devDependencies": {
     "@types/jest": "^29.5.5",
