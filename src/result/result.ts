@@ -152,6 +152,9 @@ interface Res<T, E> {
   orElse<F>(fn: () => Result<T, F>): Result<T, E | F>;
 }
 
+/**
+ * Contains the success value of type `T`.
+ */
 export interface Ok<T> extends Res<T, never> {
   expectErr(err: any): never;
   unwrapErr(): never;
@@ -174,6 +177,9 @@ export interface Ok<T> extends Res<T, never> {
   orElse<U, F>(fn: () => Result<U, F>): Ok<T>;
 }
 
+/**
+ * Contains the error value of type `E`.
+ */
 export interface Err<E> extends Res<never, E> {
   expect(err: any): never;
   unwrap(): never;
@@ -200,15 +206,12 @@ export interface Err<E> extends Res<never, E> {
 }
 
 /**
- * A Result type that is either Ok or Err
+ * `Result<T, E>` is the type used for returning and propagating errors.
+ * It is a union with the variants, `Ok(T)`, representing success and containing a value,
+ * and` Err(E)`, representing error and containing an error value.
  */
 export type Result<T, E> = Ok<T> | Err<E>;
 
-/**
- * Create a new Ok value with the given result
- * @param result The result value
- * @constructor
- */
 export function Ok<T>(result: T): Ok<T> {
   return extend(
     { result: { value: result, writable: false, configurable: false } },
@@ -216,11 +219,6 @@ export function Ok<T>(result: T): Ok<T> {
   );
 }
 
-/**
- * Create a new Err value with the given error
- * @param error The error value
- * @constructor
- */
 export function Err<E>(error: E): Err<E> {
   return extend(
     { error: { value: error, writable: false, configurable: false } },
