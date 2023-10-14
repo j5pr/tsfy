@@ -96,5 +96,3 @@ const makeNoneImpl = (): None => ({
 
 export const someImpl = Object.freeze(makeSomeImpl<any>());
 export const noneImpl = Object.freeze(makeNoneImpl());
-
-export type SomeImpl<T> = ReturnType<typeof makeSomeImpl<T>>;

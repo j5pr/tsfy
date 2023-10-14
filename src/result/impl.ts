@@ -136,6 +136,3 @@ const makeErrImpl = <E>(): Omit<Err<E>, 'error'> => ({
 
 export const okImpl = Object.freeze(makeOkImpl<any>());
 export const errImpl = Object.freeze(makeErrImpl<any>());
-
-export type OkImpl<T> = ReturnType<typeof makeOkImpl<T>>;
-export type ErrImpl<E> = ReturnType<typeof makeErrImpl<E>>;

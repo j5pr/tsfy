@@ -1,5 +1,5 @@
-import { extend, None, Option, Some } from '..';
-import { okImpl, errImpl, OkImpl, ErrImpl } from './impl';
+import { None, Option, Some } from '..';
+import { okImpl, errImpl } from './impl';
 
 interface Res<T, E> {
   /**
@@ -213,15 +213,9 @@ export interface Err<E> extends Res<never, E> {
 export type Result<T, E> = Ok<T> | Err<E>;
 
 export function Ok<T>(result: T): Ok<T> {
-  return extend(
-    { result: { value: result, writable: false, configurable: false } },
-    okImpl as OkImpl<T>,
-  );
+  return { __proto__: okImpl, result } as unknown as Ok<T>;
 }
 
 export function Err<E>(error: E): Err<E> {
-  return extend(
-    { error: { value: error, writable: false, configurable: false } },
-    errImpl as ErrImpl<E>,
-  );
+  return { __proto__: errImpl, error } as unknown as Err<E>;
 }

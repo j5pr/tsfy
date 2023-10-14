@@ -1,5 +1,5 @@
-import { extend, Ok, Result } from '..';
-import { someImpl, noneImpl, SomeImpl } from './impl';
+import { Ok, Result } from '..';
+import { someImpl, noneImpl } from './impl';
 
 interface Opt<T> {
   /**
@@ -201,10 +201,7 @@ export namespace Option {
 }
 
 export function Some<T>(value: T): Some<T> {
-  return extend(
-    { value: { value, writable: false, configurable: false } },
-    someImpl as SomeImpl<T>,
-  );
+  return { __proto__: someImpl, value } as unknown as Some<T>;
 }
 
 export const None: None = noneImpl;
