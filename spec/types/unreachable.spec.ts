@@ -1,21 +1,21 @@
 import { unreachable } from '../../src/types/unreachable';
 
-describe('unreachable', () => {
-  function stringify(n: number): string {
-    switch (n) {
-      case 0:
-        return 'zero';
-      case 1:
-        return 'one';
-      case 2:
-        return 'two';
-      case 3:
-        return 'three';
-    }
-
-    return unreachable();
+function stringify(n: number): string {
+  switch (n) {
+    case 0:
+      return 'zero';
+    case 1:
+      return 'one';
+    case 2:
+      return 'two';
+    case 3:
+      return 'three';
   }
 
+  return unreachable();
+}
+
+describe('unreachable', () => {
   it('should throw an error', () => {
     expect(unreachable).toThrowError();
   });

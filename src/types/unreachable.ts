@@ -1,5 +1,7 @@
 /**
- * Indicates that a code path is unreachable. At runtime, this will throw an error.
+ * Indicates that a code path is unreachable.
+ * At runtime, this will throw an error.
+ *
  * @param msg An optional message to include in the error.
  */
 export const unreachable = (msg?: string): never => {
