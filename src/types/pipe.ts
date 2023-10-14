@@ -59,7 +59,10 @@ export function lazyPipe<T>(value: T): Pipe<T> {
  * @param value The initial value
  */
 export function asyncPipe<T>(value: T): AsyncPipe<T> {
-  function createPipe<U, V>(transform: (value: U) => PromiseLike<V>, parent: AsyncPipe<U>) {
+  function createPipe<U, V>(
+    transform: (value: U) => PromiseLike<V>,
+    parent: AsyncPipe<U>,
+  ) {
     const pipe: AsyncPipe<V> = {
       next: <W>(fn: (value: V) => PromiseLike<W>) => createPipe(fn, pipe),
       result: async () => await transform(await parent.result()),

@@ -20,7 +20,10 @@ export function resultify<T extends (...args: any[]) => any, E = unknown>(
  * Wrap an async function that throws an error in a Result
  * @param fn The function to wrap
  */
-export function resultifyAsync<T extends (...args: any[]) => Promise<any>, E = unknown>(
+export function resultifyAsync<
+  T extends (...args: any[]) => Promise<any>,
+  E = unknown,
+>(
   fn: T,
 ): (...args: Parameters<T>) => Promise<Result<Awaited<ReturnType<T>>, E>> {
   return async function () {

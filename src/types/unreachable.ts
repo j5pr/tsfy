@@ -5,5 +5,7 @@
  * @param msg An optional message to include in the error.
  */
 export const unreachable = (msg?: string): never => {
-  throw new Error('[Unreachable] Reached an unreachable code path!' + (msg ? ` ${msg}` : ''));
+  throw new Error(
+    '[Unreachable] Reached an unreachable code path!' + (msg ? ` ${msg}` : ''),
+  );
 };
