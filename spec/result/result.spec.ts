@@ -91,6 +91,73 @@ describe('Result', () => {
       const combined = result.orElse(() => Err('error'));
       expect(combined.unwrap()).toEqual(42);
     });
+
+    it('should return true for isOkAnd() if the predicate is true', () => {
+      const result = Ok(3);
+      expect(result.isOkAnd((val) => val === 3)).toBe(true);
+    });
+
+    it('should return false for isOkAnd() if the predicate is false', () => {
+      const result = Ok(3);
+      expect(result.isOkAnd((val) => val === 4)).toBe(false);
+    });
+
+    it('should return false for isErrAnd()', () => {
+      const result = Ok(3);
+      expect(result.isErrAnd((val) => val === 3)).toBe(false);
+    });
+
+    it('should return the contained value for expect()', () => {
+      const result = Ok(3);
+      expect(result.expect('error')).toEqual(3);
+    });
+
+    it('should throw an error for expectErr()', () => {
+      const result = Ok(3);
+      expect(() => result.expectErr('error')).toThrowError();
+    });
+
+    it('should call the provided function for inspect()', () => {
+      const result = Ok(3);
+      const fn = jest.fn();
+      result.inspect(fn);
+      expect(fn).toHaveBeenCalledWith(3);
+    });
+
+    it('should not call the provided function for inspectErr()', () => {
+      const result = Ok(3);
+      const fn = jest.fn();
+      result.inspectErr(fn);
+      expect(fn).not.toHaveBeenCalled();
+    });
+
+    it('should return None for err()', () => {
+      const result = Ok(3);
+      expect(result.err()).toBe(None);
+    });
+
+    it('should return Some for ok()', () => {
+      const result = Ok(3);
+      expect(result.ok().isSome()).toBe(true);
+      expect(result.ok().unwrap()).toEqual(3);
+    });
+
+    it('should return None for transpose()', () => {
+      const result = Ok(None);
+      expect(result.transpose()).toBe(None);
+    });
+
+    it('should map the contained value', () => {
+      const result = Ok(3);
+      const mapped = result.map((val) => val * 2);
+      expect(mapped.unwrap()).toEqual(6);
+    });
+
+    it('should return itself for mapErr()', () => {
+      const result = Ok(3);
+      const mapped = result.mapErr((val: string) => val.toUpperCase());
+      expect(mapped.unwrap()).toEqual(3);
+    });
   });
 
   describe('Err', () => {
@@ -188,6 +255,74 @@ describe('Result', () => {
       const result = Err('error');
       const combined = result.orElse(() => Ok(42));
       expect(combined.unwrap()).toEqual(42);
+    });
+
+    it('should return false for isOkAnd()', () => {
+      const result = Err('error');
+      expect(result.isOkAnd(() => true)).toBe(false);
+    });
+
+    it('should return true for isErrAnd() when the predicate is true', () => {
+      const result = Err('error');
+      expect(result.isErrAnd((val) => val === 'error')).toBe(true);
+    });
+
+    it('should return false for isErrAnd() when the predicate is false', () => {
+      const result = Err('error');
+      expect(result.isErrAnd((val) => val === 'another error')).toBe(false);
+    });
+
+    it('should return the wrapped error', () => {
+      const result = Err('error');
+      expect(result.expectErr('Custom error message')).toEqual('error');
+    });
+
+    it('should not call the provided function for inspect()', () => {
+      const result = Err('error');
+      const mockFn = jest.fn();
+      result.inspect(mockFn);
+      expect(mockFn).not.toHaveBeenCalled();
+    });
+
+    it('should call the provided function for inspectErr()', () => {
+      const result = Err('error');
+      const mockFn = jest.fn();
+      result.inspectErr(mockFn);
+      expect(mockFn).toHaveBeenCalledWith('error');
+    });
+
+    it('should return itself for map()', () => {
+      const result = Err('error');
+      const mapped = result.map((val: string) => val.toUpperCase());
+      expect(mapped.unwrapErr()).toEqual('error');
+    });
+
+    it('should map the error value for mapErr()', () => {
+      const result = Err('error');
+      const mapped = result.mapErr((val) => val.toUpperCase());
+      expect(mapped.unwrapErr()).toEqual('ERROR');
+    });
+
+    it('should throw the error', () => {
+      const result = Err('error');
+      expect(() => result.expect('Custom error message')).toThrowError(
+        'Custom error message',
+      );
+    });
+
+    it('should return None for transpose() when the result is Ok(None)', () => {
+      const result = Ok(None);
+      expect(result.transpose()).toEqual(None);
+    });
+
+    it('should return Some(Ok(_)) for transpose() when the result is Ok(Some(_))', () => {
+      const result = Ok(Some('value'));
+      expect(result.transpose()).toEqual(Some(Ok('value')));
+    });
+
+    it('should return Some(Err(_)) for transpose() when the result is Err(_)', () => {
+      const result = Err('error');
+      expect(result.transpose()).toEqual(Some(Err('error')));
     });
   });
 });

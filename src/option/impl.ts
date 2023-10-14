@@ -55,7 +55,7 @@ const makeSomeImpl = <T>(): Omit<Some<T>, 'value'> => ({
   or(this: Some<T>) {
     return this;
   },
-  xor(this: Some<T>, other: Option<T>) {
+  xor<U>(this: Some<T>, other: Option<U>) {
     return other.isSome() ? None : this;
   },
   andThen<U>(this: VSome<T>, fn: (val: T) => Option<U>) {

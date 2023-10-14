@@ -115,13 +115,13 @@ interface Opt<T> {
    * Returns the option if it contains a value, otherwise returns `other`.
    * @param other The other Option
    */
-  or(other: Option<T>): Option<T>;
+  or<U>(other: Option<U>): Option<T | U>;
 
   /**
    * Return None if both this and the other Option are Some, otherwise return Some
    * @param other The other Option
    */
-  xor(other: Option<T>): Option<T>;
+  xor<U>(other: Option<U>): Option<T | U>;
 
   /**
    * Returns `None` if the option is `None`, otherwise calls the function

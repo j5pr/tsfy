@@ -75,8 +75,8 @@ const makeErrImpl = <E>(): Omit<Err<E>, 'error'> => ({
   isErrAnd(this: VErr<E>, fn: (val: E) => boolean) {
     return fn(this.error);
   },
-  expect(this: VErr<E>) {
-    throw this.error;
+  expect(err: unknown) {
+    throw err;
   },
   expectErr(this: VErr<E>) {
     return this.error;

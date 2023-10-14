@@ -54,4 +54,15 @@ describe('LRUCache', () => {
     const cache = new LRUCache<string, number>(2);
     expect(cache.capacity).toEqual(2);
   });
+
+  it('should return true if the key is present in the cache', () => {
+    const cache = new LRUCache<string, number>(2);
+    cache.set('a', 1);
+    expect(cache.has('a')).toEqual(true);
+  });
+
+  it('should return false if the key is not present in the cache', () => {
+    const cache = new LRUCache<string, number>(2);
+    expect(cache.has('a')).toEqual(false);
+  });
 });

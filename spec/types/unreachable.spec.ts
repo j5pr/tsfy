@@ -20,6 +20,12 @@ describe('unreachable', () => {
     expect(unreachable).toThrowError();
   });
 
+  it('should throw an error with a custom message', () => {
+    expect(() => unreachable('hi!')).toThrowError(
+      '[Unreachable] Reached an unreachable code path! hi!',
+    );
+  });
+
   it('should not throw an error', () => {
     for (let i = 0; i < 4; i++) expect(stringify(i)).toBeTruthy();
   });
