@@ -30,7 +30,7 @@ const makeSomeImpl = <T>(): Omit<Some<T>, 'value'> => ({
   okOrElse(this: VSome<T>) {
     return Ok(this.value);
   },
-  transpose<E>(this: VSome<Result<T, E>>): Result<Some<T>, E> {
+  transpose<U, E>(this: VSome<Result<U, E>>): Result<Some<U>, E> {
     const value = this.value;
     return value.isOk() ? Ok(Some(value.unwrap())) : Err(value.unwrapErr());
   },

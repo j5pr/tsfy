@@ -11,7 +11,7 @@ interface Res<T, E> {
    * Returns `true` if the result is `Ok` and the value inside of it matches a predicate.
    * @param fn The predicate function
    */
-  isOkAnd(fn: (val: T) => boolean): this is Ok<T>;
+  isOkAnd(fn: (val: T) => boolean): boolean;
 
   /**
    * Returns `true` if the result is `Err`.

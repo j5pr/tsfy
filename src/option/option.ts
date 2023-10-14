@@ -10,7 +10,7 @@ interface Opt<T> {
   /**
    * Returns true if the option is a `Some` and the value inside of it matches a predicate.
    */
-  isSomeAnd(fn: (val: T) => boolean): this is Some<T>;
+  isSomeAnd(fn: (val: T) => boolean): boolean;
 
   /**
    * Returns true if the option is a `None` value.
@@ -66,7 +66,7 @@ interface Opt<T> {
    * None will be mapped to `Ok(None)`. `Some(Ok(_))` and
    * `Some(Err(_))` will be mapped to `Ok(Some(_))` and `Err(_)`.
    */
-  transpose<E>(this: Option<Result<T, E>>): Result<Option<T>, E>;
+  transpose<U, E>(this: Option<Result<U, E>>): Result<Option<U>, E>;
 
   /**
    * Returns `None` if the option is `None`, otherwise calls
@@ -150,7 +150,7 @@ export interface Some<T> extends Opt<T> {
 
   okOr<E>(err: E): Ok<T>;
   okOrElse<E>(err: () => E): Ok<T>;
-  transpose<E>(this: Some<Result<T, E>>): Result<Some<T>, E>;
+  transpose<U, E>(this: Some<Result<U, E>>): Result<Some<U>, E>;
 
   map<U>(fn: (val: T) => U): Some<U>;
 

@@ -1,4 +1,4 @@
-import { Err, Ok } from '../../src/result/result';
+import { Err, Ok, Result } from '../../src/result/result';
 import { Option, Some, None } from '../../src/option/option';
 
 describe('Option', () => {
@@ -125,6 +125,12 @@ describe('Option', () => {
       expect(some.xor(other)).toBe(None);
     });
 
+    it('should return itself if xor() is called with None', () => {
+      const some: Option<number> = Some(42);
+      const other: Option<number> = None;
+      expect(some.xor(other)).toBe(some);
+    });
+
     it('should return the mapped Option if andThen() is called', () => {
       const some: Option<number> = Some(42);
       const mapped: Option<string> = some.andThen((val) =>
@@ -137,6 +143,18 @@ describe('Option', () => {
       const some: Option<number> = Some(42);
       const other: Option<number> = Some(99);
       expect(some.orElse(() => other)).toBe(some);
+    });
+
+    it('should return Ok(Some(val)) when transposed on Some(Ok(val))', () => {
+      const some: Option<Result<number, string>> = Some(Ok(42));
+      const result: Result<Option<number>, string> = some.transpose();
+      expect(result).toEqual(Ok(Some(42)));
+    });
+
+    it('should return Err(err) when transposed on Some(Err(err))', () => {
+      const some: Option<Result<number, string>> = Some(Err('error message'));
+      const result: Result<Option<number>, string> = some.transpose();
+      expect(result).toEqual(Err('error message'));
     });
   });
 
@@ -265,6 +283,12 @@ describe('Option', () => {
       const mockFn = jest.fn();
       none.orElse(mockFn);
       expect(mockFn).toHaveBeenCalled();
+    });
+
+    it('should return Ok(None) when transposed on None', () => {
+      const none: Option<Result<number, string>> = None;
+      const result: Result<Option<number>, string> = none.transpose();
+      expect(result).toEqual(Ok(None));
     });
   });
 });
