@@ -1,6 +1,6 @@
 {
   "name": "tsfy",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Useful type-safe utility functions and types.",
   "author": "Brian Shao <brian@ngsh.ca>",
   "license": "MIT",
@@ -11,6 +11,12 @@
     "functional",
     "option",
     "result"
+  ],
+  "files": [
+    "src/",
+    "dist/",
+    "SECURITY.md",
+    "CODE_OF_CONDUCT.md"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
