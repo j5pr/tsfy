@@ -80,7 +80,7 @@ interface Opt<T> {
   /**
    * Converts from `Option<Option<T>>` to `Option<T>`.
    */
-  flatten(this: Option<Option<T>>): Option<T>;
+  flatten<U>(this: Option<Option<U>>): Option<U>;
 
   /**
    * Maps an `Option<T>` toc`Option<U>` by applying a function to a
