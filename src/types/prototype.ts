@@ -7,11 +7,11 @@
  */
 export function extend<T extends PropertyDescriptorMap, U extends {}>(
   obj: T,
-  parent: U
+  parent: U,
 ): {
-  [K in keyof T]: T[K]["get"] extends (...args: any) => any
-    ? ReturnType<T[K]["get"]>
-    : T[K]["value"];
+  [K in keyof T]: T[K]['get'] extends (...args: any) => any
+    ? ReturnType<T[K]['get']>
+    : T[K]['value'];
 } & U {
   return Object.create(parent, obj);
 }
