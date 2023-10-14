@@ -1,4 +1,4 @@
-name: Jest
+name: Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: ['main']
 
 jobs:
-  build:
+  jest:
     runs-on: ubuntu-latest
     strategy:
       matrix:
