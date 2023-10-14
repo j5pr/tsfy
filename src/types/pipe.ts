@@ -1,5 +1,3 @@
-import { unreachable } from './unreachable';
-
 /**
  * A pipe is a function that takes a value and returns a new value by
  * calling a function on it. This is similar to the `map` function.
@@ -61,7 +59,7 @@ export function lazyPipe<T>(value: T): Pipe<T> {
 export function asyncPipe<T>(value: T): AsyncPipe<T> {
   function createPipe<U, V>(
     transform: (value: U) => PromiseLike<V>,
-    parent: AsyncPipe<U>,
+    parent: { result: () => Promise<U> },
   ) {
     const pipe: AsyncPipe<V> = {
       next: <W>(fn: (value: V) => PromiseLike<W>) => createPipe(fn, pipe),
@@ -71,8 +69,5 @@ export function asyncPipe<T>(value: T): AsyncPipe<T> {
     return pipe;
   }
 
-  return createPipe(async () => value, {
-    next: () => unreachable(),
-    result: () => Promise.resolve(null),
-  });
+  return createPipe(async () => value, pipe(Promise.resolve(null)));
 }
