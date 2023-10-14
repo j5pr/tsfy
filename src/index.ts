@@ -10,4 +10,3 @@ export * from './types/pipe';
 export * from './types/prototype';
 export * from './types/unreachable';
 export * from './types/unknown';
-export * from './types/wrap';

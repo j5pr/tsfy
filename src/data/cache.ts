@@ -1,4 +1,4 @@
-import { Option, Wrap } from '..';
+import { Option, Some } from '..';
 
 /**
  * A cache that stores key-value pairs.
@@ -40,10 +40,10 @@ export interface Cache<K, V> {
  * @param capacity The maximum number of entries to store.
  */
 export class LRUCache<K, V> {
-  private cache: Map<K, Wrap<V>>;
+  private cache: Map<K, Some<V>>;
 
   constructor(public readonly capacity?: number) {
-    this.cache = new Map<K, Wrap<V>>();
+    this.cache = new Map<K, Some<V>>();
   }
 
   has(key: K): boolean {
@@ -56,7 +56,7 @@ export class LRUCache<K, V> {
         this.cache.delete(key);
         this.cache.set(key, value);
       })
-      .map(({ value }) => value);
+      .flatten();
   }
 
   set(key: K, value: V): V {
@@ -65,7 +65,7 @@ export class LRUCache<K, V> {
     if (this.capacity && this.cache.size >= this.capacity)
       this.cache.delete(this.cache.keys().next().value);
 
-    this.cache.set(key, { value });
+    this.cache.set(key, Some(value));
     return value;
   }
 
