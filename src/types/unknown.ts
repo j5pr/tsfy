@@ -12,8 +12,8 @@ export const toUnknown = <T>(val: T): unknown => val;
  *
  * @param list The list to convert
  */
-export function unknownList(list: any[]): unknown;
-export function unknownList(list: any[] | undefined): unknown | undefined;
-export function unknownList(list: any[] | undefined): unknown | undefined {
+export function unknownList(list: unknown[]): unknown;
+export function unknownList(list: unknown[] | undefined): unknown | undefined;
+export function unknownList(list: unknown[] | undefined): unknown | undefined {
   return list;
 }

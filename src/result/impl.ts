@@ -13,7 +13,7 @@ const makeOkImpl = <T>(): Omit<Ok<T>, 'result'> => ({
   expect(this: VOk<T>) {
     return this.result;
   },
-  expectErr(err: any): never {
+  expectErr(err: unknown): never {
     throw err;
   },
   unwrap(this: VOk<T>) {
@@ -54,13 +54,13 @@ const makeOkImpl = <T>(): Omit<Ok<T>, 'result'> => ({
   mapOrElse<U>(this: VOk<T>, _def: () => U, fn: (val: T) => U) {
     return fn(this.result);
   },
-  and<U>(this: VOk<T>, other: Result<U, any>) {
+  and<U, F>(this: VOk<T>, other: Result<U, F>) {
     return other;
   },
   or(this: VOk<T>) {
     return this;
   },
-  andThen<U>(this: VOk<T>, fn: (val: T) => Result<U, any>) {
+  andThen<U, F>(this: VOk<T>, fn: (val: T) => Result<U, F>) {
     return fn(this.result);
   },
   orElse(this: VOk<T>) {
@@ -107,25 +107,25 @@ const makeErrImpl = <E>(): Omit<Err<E>, 'error'> => ({
   transpose(this: VErr<E>): Some<Err<E>> {
     return Some(Err(this.error));
   },
-  map<U>(this: VErr<E>, _fn: (val: never) => U) {
+  map(this: VErr<E>) {
     return this;
   },
   mapErr<F>(this: VErr<E>, fn: (val: E) => F) {
     return Err(fn(this.error));
   },
-  mapOr<U>(this: VErr<E>, def: U, _fn: (val: never) => U) {
+  mapOr<U>(this: VErr<E>, def: U) {
     return def;
   },
-  mapOrElse<U>(this: VErr<E>, def: () => U, _fn: (val: never) => U) {
+  mapOrElse<U>(this: VErr<E>, def: () => U) {
     return def();
   },
-  and<U>(this: VErr<E>, _other: Result<U, E>) {
+  and(this: VErr<E>) {
     return this;
   },
   or<U, F>(this: VErr<E>, other: Result<U, F>) {
     return other;
   },
-  andThen<U>(this: VErr<E>, _fn: (val: never) => Result<U, any>) {
+  andThen(this: VErr<E>) {
     return this;
   },
   orElse<U, F>(this: VErr<E>, fn: () => Result<U, F>) {
@@ -133,5 +133,5 @@ const makeErrImpl = <E>(): Omit<Err<E>, 'error'> => ({
   },
 });
 
-export const okImpl = Object.freeze(makeOkImpl<any>());
-export const errImpl = Object.freeze(makeErrImpl<any>());
+export const okImpl = Object.freeze(makeOkImpl<unknown>());
+export const errImpl = Object.freeze(makeErrImpl<unknown>());

@@ -70,7 +70,7 @@ const makeNoneImpl = (): None => ({
   isSome: () => false,
   isSomeAnd: () => false,
   isNone: () => true,
-  expect(err: any) {
+  expect(err: unknown) {
     throw err;
   },
   unwrap() {
@@ -94,5 +94,5 @@ const makeNoneImpl = (): None => ({
   orElse: <U>(fn: () => Option<U>) => fn(),
 });
 
-export const someImpl = Object.freeze(makeSomeImpl<any>());
+export const someImpl = Object.freeze(makeSomeImpl<unknown>());
 export const noneImpl = Object.freeze(makeNoneImpl());

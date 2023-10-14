@@ -4,12 +4,13 @@ import { Err, Ok, Result } from '..';
  * Wrap a function that throws an error in a Result
  * @param fn The function to wrap
  */
-export function resultify<T extends (...args: any[]) => any, E = unknown>(
-  fn: T,
-): (...args: Parameters<T>) => Result<ReturnType<T>, E> {
-  return function () {
+export function resultify<
+  T extends (...args: unknown[]) => unknown,
+  E = unknown,
+>(fn: T): (...args: Parameters<T>) => Result<ReturnType<T>, E> {
+  return function (...args: Parameters<T>) {
     try {
-      return Ok(fn(...arguments));
+      return Ok(fn(...args) as ReturnType<T>);
     } catch (err: unknown) {
       return Err(err as E);
     }
@@ -21,15 +22,15 @@ export function resultify<T extends (...args: any[]) => any, E = unknown>(
  * @param fn The function to wrap
  */
 export function resultifyAsync<
-  T extends (...args: any[]) => Promise<any>,
+  T extends (...args: unknown[]) => Promise<unknown>,
   E = unknown,
 >(
   fn: T,
 ): (...args: Parameters<T>) => Promise<Result<Awaited<ReturnType<T>>, E>> {
-  return async function () {
+  return async function (...args: Parameters<T>) {
     try {
-      const result = await fn(...arguments);
-      return Ok(result);
+      const result = await fn(...args);
+      return Ok(result as Awaited<ReturnType<T>>);
     } catch (err) {
       return Err(err as E);
     }

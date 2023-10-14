@@ -16,12 +16,19 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "types": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
     "test": "jest",
     "bump": "pnpm run build && pnpm run test && pnpm publish"
   },
   "devDependencies": {
     "@types/jest": "^29.5.5",
     "@types/node": "^20.8.5",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "jest": "^29.7.0",
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.1",

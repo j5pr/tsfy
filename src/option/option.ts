@@ -21,7 +21,7 @@ interface Opt<T> {
    * Returns the contained `Some` value, throwing if the value is a `None` with a custom error.
    * @param err The custom error to throw
    */
-  expect(err: any): T;
+  expect(err: unknown): T;
 
   /**
    * Returns the contained `Some` value, throwing if the value is a `None`.
@@ -161,7 +161,7 @@ export interface Some<T> extends Opt<T> {
  * No value.
  */
 export interface None extends Opt<never> {
-  expect(err: any): never;
+  expect(err: unknown): never;
 
   unwrap(): never;
   unwrapOr<U>(def: U): U;

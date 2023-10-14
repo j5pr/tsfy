@@ -28,13 +28,13 @@ interface Res<T, E> {
    * Returns the contained `Ok` value, throwing if the value is an `Err` with a custom error.
    * @param err The custom error to throw
    */
-  expect(err: any): T;
+  expect(err: unknown): T;
 
   /**
    * Returns the contained `Err` value, throwing if the value is an `Ok` with a custom error.
    * @param err The custom error to throw
    */
-  expectErr(err: any): E;
+  expectErr(err: unknown): E;
 
   /**
    * Returns the contained `Ok` value, throwing if the value is an `Err`.
@@ -156,7 +156,7 @@ interface Res<T, E> {
  * Contains the success value of type `T`.
  */
 export interface Ok<T> extends Res<T, never> {
-  expectErr(err: any): never;
+  expectErr(err: unknown): never;
   unwrapErr(): never;
   unwrapOr<U>(def: U): T;
   unwrapOrElse<U>(fn: () => U): T;
@@ -181,7 +181,7 @@ export interface Ok<T> extends Res<T, never> {
  * Contains the error value of type `E`.
  */
 export interface Err<E> extends Res<never, E> {
-  expect(err: any): never;
+  expect(err: unknown): never;
   unwrap(): never;
   unwrapErr(): E;
   unwrapOr<U>(def: U): U;
