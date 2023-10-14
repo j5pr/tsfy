@@ -1,3 +1,5 @@
+import { unreachable } from './unreachable';
+
 /**
  * A pipe is a function that takes a value and returns a new value by
  * calling a function on it. This is similar to the `map` function.
@@ -16,9 +18,58 @@ export interface Pipe<T> {
 }
 
 /**
+ * An asynchronous pipe that lazily evaluates the result
+ */
+export interface AsyncPipe<T> {
+  /**
+   * Map the value to a new value
+   * @param fn The function to call
+   */
+  next<U>(fn: (value: T) => PromiseLike<U>): AsyncPipe<U>;
+
+  /**
+   * Return the value held by this pipe
+   */
+  result(): Promise<T>;
+}
+
+/**
  * Create a new pipe from a value
  * @param value The initial value
  */
 export function pipe<T>(value: T): Pipe<T> {
   return { next: (fn) => pipe(fn(value)), result: () => value };
+}
+
+export function lazyPipe<T>(value: T): Pipe<T> {
+  function createPipe<U, V>(transform: (value: U) => V, parent: Pipe<U>) {
+    const pipe: Pipe<V> = {
+      next: <W>(fn: (value: V) => W) => createPipe(fn, pipe),
+      result: () => transform(parent.result()),
+    };
+
+    return pipe;
+  }
+
+  return createPipe(() => value, pipe(null));
+}
+
+/**
+ * Create a new asynchronous pipe from a value
+ * @param value The initial value
+ */
+export function asyncPipe<T>(value: T): AsyncPipe<T> {
+  function createPipe<U, V>(transform: (value: U) => PromiseLike<V>, parent: AsyncPipe<U>) {
+    const pipe: AsyncPipe<V> = {
+      next: <W>(fn: (value: V) => PromiseLike<W>) => createPipe(fn, pipe),
+      result: async () => await transform(await parent.result()),
+    };
+
+    return pipe;
+  }
+
+  return createPipe(async () => value, {
+    next: () => unreachable(),
+    result: () => Promise.resolve(null),
+  });
 }

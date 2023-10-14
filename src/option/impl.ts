@@ -1,43 +1,52 @@
 import { Some, None, Option, Result, Ok, Err } from '..';
 
+type VSome<T> = { value: T } & Some<T>;
+
 const makeSomeImpl = <T>(): Omit<Some<T>, 'value'> => ({
   isSome: () => true,
-  isNone: () => false,
-  expect(this: Some<T>) {
-    return this.value;
-  },
-  unwrap(this: Some<T>) {
-    return this.value;
-  },
-  unwrapOr(this: Some<T>) {
-    return this.value;
-  },
-  unwrapOrElse(this: Some<T>) {
-    return this.value;
-  },
-  okOr(this: Some<T>) {
-    return Ok(this.value);
-  },
-  okOrElse(this: Some<T>) {
-    return Ok(this.value);
-  },
-  transpose<E>(this: Some<Result<T, E>>): Result<Some<T>, E> {
-    const value = this.value;
-    return value.isOk() ? Ok(Some(value.result)) : Err(value.error);
-  },
-  filter(this: Some<T>, fn: (val: T) => boolean) {
-    return fn(this.value) ? this : None;
-  },
-  flatten<U>(this: Some<Option<U>>) {
-    return this.value;
-  },
-  map<U>(this: Some<T>, fn: (val: T) => U) {
-    return Some(fn(this.value));
-  },
-  mapOr<U>(this: Some<T>, _def: U, fn: (val: T) => U) {
+  isSomeAnd(this: VSome<T>, fn: (val: T) => boolean) {
     return fn(this.value);
   },
-  mapOrElse<U>(this: Some<T>, _def: () => U, fn: (val: T) => U) {
+  isNone: () => false,
+  expect(this: VSome<T>) {
+    return this.value;
+  },
+  unwrap(this: VSome<T>) {
+    return this.value;
+  },
+  unwrapOr(this: VSome<T>) {
+    return this.value;
+  },
+  unwrapOrElse(this: VSome<T>) {
+    return this.value;
+  },
+  inspect(this: VSome<T>, fn: (val: T) => void) {
+    fn(this.value);
+    return this;
+  },
+  okOr(this: VSome<T>) {
+    return Ok(this.value);
+  },
+  okOrElse(this: VSome<T>) {
+    return Ok(this.value);
+  },
+  transpose<E>(this: VSome<Result<T, E>>): Result<Some<T>, E> {
+    const value = this.value;
+    return value.isOk() ? Ok(Some(value.unwrap())) : Err(value.unwrapErr());
+  },
+  filter(this: VSome<T>, fn: (val: T) => boolean) {
+    return fn(this.value) ? this : None;
+  },
+  flatten<U>(this: VSome<Option<U>>) {
+    return this.value;
+  },
+  map<U>(this: VSome<T>, fn: (val: T) => U) {
+    return Some(fn(this.value));
+  },
+  mapOr<U>(this: VSome<T>, _def: U, fn: (val: T) => U) {
+    return fn(this.value);
+  },
+  mapOrElse<U>(this: VSome<T>, _def: () => U, fn: (val: T) => U) {
     return fn(this.value);
   },
   and<U>(other: Option<U>): Option<U> {
@@ -49,7 +58,7 @@ const makeSomeImpl = <T>(): Omit<Some<T>, 'value'> => ({
   xor(this: Some<T>, other: Option<T>) {
     return other.isSome() ? None : this;
   },
-  andThen<U>(this: Some<T>, fn: (val: T) => Option<U>) {
+  andThen<U>(this: VSome<T>, fn: (val: T) => Option<U>) {
     return fn(this.value);
   },
   orElse(this: Some<T>) {
@@ -59,6 +68,7 @@ const makeSomeImpl = <T>(): Omit<Some<T>, 'value'> => ({
 
 const makeNoneImpl = (): None => ({
   isSome: () => false,
+  isSomeAnd: () => false,
   isNone: () => true,
   expect(err: any) {
     throw err;
@@ -68,6 +78,7 @@ const makeNoneImpl = (): None => ({
   },
   unwrapOr: <U>(def: U) => def,
   unwrapOrElse: <U>(fn: () => U) => fn(),
+  inspect: () => None,
   okOr: <E>(err: E) => Err(err),
   okOrElse: <E>(fn: () => E) => Err(fn()),
   transpose: () => Ok(None),

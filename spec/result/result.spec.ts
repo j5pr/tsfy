@@ -1,11 +1,12 @@
+import { None, Some } from '../../src/option/option';
 import { Ok, Err } from '../../src/result/result';
 
 describe('Result', () => {
   describe('Ok', () => {
     it('should create an Ok value with the given result', () => {
       const result = Ok(42);
-      expect(result.result).toEqual(42);
-      expect(result.error).toBeUndefined();
+      expect(result.unwrap()).toEqual(42);
+      expect(result.err()).toBe(None);
     });
 
     it('should return true for isOk()', () => {
@@ -47,7 +48,7 @@ describe('Result', () => {
     it('should map the result value', () => {
       const result = Ok(42);
       const mapped = result.map((val) => val * 2);
-      expect(mapped.result).toEqual(84);
+      expect(mapped.unwrap()).toEqual(84);
     });
 
     it('should return the result value for mapOr()', () => {
@@ -69,34 +70,41 @@ describe('Result', () => {
       const result1 = Ok(42);
       const result2 = Ok('hello');
       const combined = result1.and(result2);
-      expect(combined.result).toEqual('hello');
+      expect(combined.unwrap()).toEqual('hello');
     });
 
     it('should return the first Ok value for or()', () => {
       const result1 = Ok(42);
       const result2 = Ok(52);
       const combined = result1.or(result2);
-      expect(combined.result).toEqual(42);
+      expect(combined.unwrap()).toEqual(42);
     });
 
     it('should combine with another Result using andThen()', () => {
       const result = Ok(42);
       const combined = result.andThen((val) => Ok(val * 2));
-      expect(combined.result).toEqual(84);
+      expect(combined.unwrap()).toEqual(84);
     });
 
     it('should return itself for orElse()', () => {
       const result = Ok(42);
       const combined = result.orElse(() => Err('error'));
-      expect(combined.result).toEqual(42);
+      expect(combined.unwrap()).toEqual(42);
     });
   });
 
   describe('Err', () => {
+    it('should transpose correctly', () => {
+      const result = Ok(Some(3));
+      const transposed = result.transpose().unwrap();
+      expect(() => transposed.unwrapErr()).toThrowError();
+      expect(transposed.ok().isSome()).toBe(true);
+    });
+
     it('should create an Err value with the given error', () => {
       const result = Err('error');
-      expect(result.error).toEqual('error');
-      expect(result.result).toBeUndefined();
+      expect(result.unwrapErr()).toEqual('error');
+      expect(result.ok()).toBe(None);
     });
 
     it('should return false for isOk()', () => {
@@ -138,7 +146,7 @@ describe('Result', () => {
     it('should map the error value', () => {
       const result = Err('error');
       const mapped = result.mapErr((val) => val.toUpperCase());
-      expect(mapped.error).toEqual('ERROR');
+      expect(mapped.unwrapErr()).toEqual('ERROR');
     });
 
     it('should return the default value for mapOr()', () => {
@@ -160,26 +168,26 @@ describe('Result', () => {
       const result1 = Err('error');
       const result2 = Ok('hello');
       const combined = result1.and(result2);
-      expect(combined.error).toEqual('error');
+      expect(combined.unwrapErr()).toEqual('error');
     });
 
     it('should combine with another Err value for or()', () => {
       const result1 = Err('error');
       const result2 = Err('another error');
       const combined = result1.or(result2);
-      expect(combined.error).toEqual('another error');
+      expect(combined.unwrapErr()).toEqual('another error');
     });
 
     it('should return itself for andThen()', () => {
       const result = Err('error');
       const combined = result.andThen((val) => Ok(val * 2));
-      expect(combined.error).toEqual('error');
+      expect(combined.unwrapErr()).toEqual('error');
     });
 
     it('should combine with another Result using orElse()', () => {
       const result = Err('error');
       const combined = result.orElse(() => Ok(42));
-      expect(combined.result).toEqual(42);
+      expect(combined.unwrap()).toEqual(42);
     });
   });
 });
