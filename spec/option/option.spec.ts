@@ -73,28 +73,11 @@ describe('Option', () => {
       expect(mapped.unwrap()).toBe('The answer is 42');
     });
 
-    it('should return the provided default value if mapOr() is called with None', () => {
-      const none: Option<number> = None;
-      expect(none.mapOr('default', (val) => `The answer is ${val}`)).toBe(
-        'default',
-      );
-    });
-
     it('should return the mapped value if mapOr() is called with Some', () => {
       const some: Option<number> = Some(42);
       expect(some.mapOr('default', (val) => `The answer is ${val}`)).toBe(
         'The answer is 42',
       );
-    });
-
-    it('should return the provided default value if mapOrElse() is called with None', () => {
-      const none: Option<number> = None;
-      expect(
-        none.mapOrElse(
-          () => 'default',
-          (val) => `The answer is ${val}`,
-        ),
-      ).toBe('default');
     });
 
     it('should return the mapped value if mapOrElse() is called with Some', () => {
@@ -172,83 +155,63 @@ describe('Option', () => {
     });
 
     it('should return the result of the function if unwrapOrElse() is called', () => {
-      const none: Option<number> = None;
-      expect(none.unwrapOrElse(() => 42)).toBe(42);
-    });
-
-    it('should return the other Option if and() is called', () => {
-      const none: Option<number> = None;
-      const other: Option<string> = Some('hello');
-      expect(none.and(other)).toBe(none);
+      expect(None.unwrapOrElse(() => 42)).toBe(42);
     });
 
     it('should return the result of the function if orElse() is called', () => {
-      const none: Option<number> = None;
       const other: Option<number> = Some(99);
-      expect(none.orElse(() => other)).toBe(other);
+      expect(None.orElse(() => other)).toBe(other);
     });
 
     it('should return false when isSomeAnd() is called', () => {
-      const none: Option<number> = None;
-      expect(none.isSomeAnd((val) => val > 0)).toBe(false);
+      expect(None.isSomeAnd(() => true)).toBe(false);
     });
 
     it('should return true when isNone() is called', () => {
-      const none: Option<number> = None;
-      expect(none.isNone()).toBe(true);
+      expect(None.isNone()).toBe(true);
     });
 
     it('should throw an error when expect() is called', () => {
-      const none: Option<number> = None;
-      expect(() => none.expect('error message')).toThrowError('error message');
+      expect(() => None.expect('error message')).toThrowError('error message');
     });
 
     it('should throw an error when unwrap() is called', () => {
-      const none: Option<number> = None;
-      expect(() => none.unwrap()).toThrowError();
+      expect(() => None.unwrap()).toThrowError();
     });
 
     it('should call the function when inspect() is called', () => {
-      const none: Option<number> = None;
       const mockFn = jest.fn();
-      none.inspect(mockFn);
+      None.inspect(mockFn);
       expect(mockFn).not.toHaveBeenCalled();
     });
 
-    it('should return an Ok when okOr() is called', () => {
-      const none: Option<number> = None;
-      expect(none.okOr('error')).toEqual(Err('error'));
+    it('should return an Err when okOr() is called', () => {
+      expect(None.okOr('error')).toEqual(Err('error'));
     });
 
-    it('should return an Ok when okOrElse() is called', () => {
-      const none: Option<number> = None;
-      expect(none.okOrElse(() => 'error')).toEqual(Err('error'));
+    it('should return an Err when okOrElse() is called', () => {
+      expect(None.okOrElse(() => 'error')).toEqual(Err('error'));
     });
 
     it('should return None when filter() is called', () => {
-      const none: Option<number> = None;
-      expect(none.filter((val) => val > 0)).toBe(none);
+      expect(None.filter(() => true)).toBe(None);
     });
 
     it('should return None when flatten() is called', () => {
-      const none: Option<Option<number>> = None;
-      expect(none.flatten()).toBe(none);
+      expect(None.flatten()).toBe(None);
     });
 
     it('should return None when map() is called', () => {
-      const none: Option<number> = None;
-      expect(none.map((val) => val + 1)).toBe(none);
+      expect(None.map((val) => val + 1)).toBe(None);
     });
 
     it('should return the default value when mapOr() is called', () => {
-      const none: Option<number> = None;
-      expect(none.mapOr('default', (val) => val + 'no!')).toBe('default');
+      expect(None.mapOr('default', (val) => val + 'no!')).toBe('default');
     });
 
     it('should return the default value when mapOrElse() is called', () => {
-      const none: Option<number> = None;
       expect(
-        none.mapOrElse(
+        None.mapOrElse(
           () => 'default',
           (val) => val + 'no!',
         ),
@@ -256,26 +219,22 @@ describe('Option', () => {
     });
 
     it('should return None when and() is called', () => {
-      const none: Option<number> = None;
       const other: Option<string> = Some('hello');
-      expect(none.and(other)).toBe(none);
+      expect(None.and(other)).toBe(None);
     });
 
     it('should return the other Option when or() is called', () => {
-      const none = None;
       const other = Some(99);
-      expect(none.or(other)).toBe(other);
+      expect(None.or(other)).toBe(other);
     });
 
     it('should return second value when xor() is called', () => {
-      const none: Option<number> = None;
       const other: Option<number> = Some(99);
-      expect(none.xor(other)).toBe(other);
+      expect(None.xor(other)).toBe(other);
     });
 
     it('should return None when andThen() is called', () => {
-      const none: Option<number> = None;
-      expect(none.andThen((val) => Some(val + 1))).toBe(none);
+      expect(None.andThen((val) => Some(val + 1))).toBe(None);
     });
 
     it('should call the function when orElse() is called', () => {
