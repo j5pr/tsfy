@@ -1,6 +1,6 @@
 {
   "name": "tsfy",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Useful type-safe utility functions and types.",
   "author": "Brian Shao <brian@ngsh.ca>",
   "license": "MIT",
