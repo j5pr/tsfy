@@ -14,9 +14,7 @@
   ],
   "files": [
     "src/",
-    "dist/",
-    "SECURITY.md",
-    "CODE_OF_CONDUCT.md"
+    "dist/"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
