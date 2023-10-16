@@ -20,6 +20,6 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install
       - name: ESLint
-        run: pnpm run lint
+        run: pnpm run lint:eslint
       - name: Typecheck
-        run: pnpm run types
+        run: pnpm run lint:types

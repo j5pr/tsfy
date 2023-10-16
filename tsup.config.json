@@ -1,0 +1,7 @@
+{
+  "target": "esnext",
+  "format": ["cjs", "esm"],
+  "minify": "terser",
+  "dts": true,
+  "sourcemap": true
+}

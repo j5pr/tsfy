@@ -1,21 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
     "outDir": "dist"
   },
-  "include": [
-    "src/**/*",
-    "spec/types/pipe.spec.ts",
-    "spec/types/unreachable.spec.ts",
-    "spec/option/option.spec.ts",
-    "spec/result/resultify.spec.ts",
-    "spec/result/result.spec.ts"
-  ],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": ["src/**/*", "spec/**/*"],
+  "exclude": ["node_modules"]
 }
