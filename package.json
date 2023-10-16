@@ -13,7 +13,6 @@
     "result"
   ],
   "files": [
-    "src/",
     "dist/"
   ],
   "main": "dist/index.js",
