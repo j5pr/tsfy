@@ -33,13 +33,19 @@ export interface Cache<K, V> {
    * Invalidates the cache.
    */
   invalidate(): void;
+
+  /**
+   * Returns an iterator over the cache, as [key, value] pairs.
+   * Pairs are returned in the order of least recently used.
+   */
+  [Symbol.iterator](): Iterator<readonly [K, V]>;
 }
 
 /**
  * A simple LRU cache implementation that uses a `Map`.
  * @param capacity The maximum number of entries to store.
  */
-export class LRUCache<K, V> {
+export class LRUCache<K, V> implements Cache<K, V> {
   private cache: Map<K, Some<V>>;
 
   constructor(public readonly capacity?: number) {
@@ -75,5 +81,19 @@ export class LRUCache<K, V> {
 
   invalidate(): void {
     this.cache.clear();
+  }
+
+  [Symbol.iterator]() {
+    const entries = this.cache.entries();
+
+    return {
+      next: () => {
+        const next = entries.next();
+        if (next.done) return { done: true, value: undefined } as const;
+
+        const [key, value] = next.value as [K, Some<V>];
+        return { done: false, value: [key, value.unwrap()] } as const;
+      },
+    };
   }
 }

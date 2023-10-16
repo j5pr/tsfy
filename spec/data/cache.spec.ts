@@ -65,4 +65,15 @@ describe('LRUCache', () => {
     const cache = new LRUCache<string, number>(2);
     expect(cache.has('a')).toEqual(false);
   });
+
+  it('should iterate through the cache correctly', () => {
+    const cache = new LRUCache<string, number>(2);
+    cache.set('a', 1);
+    cache.set('b', 2);
+
+    const entries = [...cache];
+    expect(entries.length).toEqual(2);
+    expect(entries[0]).toEqual(['a', 1]);
+    expect(entries[1]).toEqual(['b', 2]);
+  });
 });
