@@ -1,4 +1,4 @@
-import { toUnknown, unknownList } from '../../src/types/unknown';
+import { toUnknown, unknownList } from '../../src/index.js';
 
 describe('toUnknown', () => {
   it('should return the value as unknown', () => {

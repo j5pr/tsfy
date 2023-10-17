@@ -1,4 +1,4 @@
-import { Cache, LRUCache } from '..';
+import { Cache, LRUCache } from '../index.js';
 
 /**
  * A memoized function, with the cache methods attached.

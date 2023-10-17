@@ -1,5 +1,5 @@
-import { None, Option, Some } from '..';
-import { okImpl, errImpl } from './impl';
+import { None, Option, Some } from '../index.js';
+import { okImpl, errImpl } from './impl.js';
 
 interface Res<T, E> {
   /**

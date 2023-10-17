@@ -1,4 +1,4 @@
-import { extend } from '../../src/types/prototype';
+import { extend } from '../../src/index.js';
 
 describe('extend', () => {
   it('should create an object with the correct properties', () => {

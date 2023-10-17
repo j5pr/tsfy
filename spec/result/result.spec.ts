@@ -1,5 +1,4 @@
-import { None, Some } from '../../src/option/option';
-import { Ok, Err } from '../../src/result/result';
+import { None, Some, Ok, Err } from '../../src/index.js';
 
 describe('Result', () => {
   describe('Ok', () => {

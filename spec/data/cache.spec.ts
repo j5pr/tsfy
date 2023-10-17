@@ -1,5 +1,4 @@
-import { Some, None } from '../../src/option/option';
-import { LRUCache } from '../../src/data/cache';
+import { Some, None, LRUCache } from '../../src/index.js';
 
 describe('LRUCache', () => {
   it('should set and get values correctly', () => {

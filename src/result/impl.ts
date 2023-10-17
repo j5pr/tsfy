@@ -1,4 +1,4 @@
-import { Ok, Err, Result, Option, None, Some } from '..';
+import { Ok, Err, Result, Option, None, Some } from '../index.js';
 
 type VOk<T> = { result: T } & Ok<T>;
 type VErr<E> = { error: E } & Err<E>;

@@ -1,5 +1,5 @@
-import { Ok, Result } from '..';
-import { someImpl, noneImpl } from './impl';
+import { Ok, Result } from '../index.js';
+import { someImpl, noneImpl } from './impl.js';
 
 interface Opt<T> {
   /**

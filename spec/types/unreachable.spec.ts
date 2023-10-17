@@ -1,4 +1,4 @@
-import { unreachable } from '../../src/types/unreachable';
+import { unreachable } from '../../src/index.js';
 
 function stringify(n: number): string {
   switch (n) {

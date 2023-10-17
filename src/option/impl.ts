@@ -1,4 +1,4 @@
-import { Some, None, Option, Result, Ok, Err } from '..';
+import { Some, None, Option, Result, Ok, Err } from '../index.js';
 
 type VSome<T> = { value: T } & Some<T>;
 

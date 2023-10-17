@@ -1,4 +1,4 @@
-import { memoize } from '../../src/data/memoize';
+import { memoize } from '../../src/index.js';
 
 describe('memoize', () => {
   it('should memoize a function', () => {

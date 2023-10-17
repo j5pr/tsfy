@@ -6,6 +6,8 @@
     "noEmit": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "rootDir": ".",
     "outDir": "dist"
   },
   "include": ["src/**/*", "spec/**/*"],
