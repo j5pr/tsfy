@@ -1,6 +1,11 @@
 import { Cache, LRUCache } from '..';
 
 /**
+ * A memoized function, with the cache methods attached.
+ */
+export type Memoized<K, V> = ((key: K) => V) & Cache<K, V>;
+
+/**
  * Memoizes a function using a `LRUCache`.
  *
  * @param fn The function to memoize
@@ -10,9 +15,9 @@ import { Cache, LRUCache } from '..';
 export function memoize<K, V>(fn: (key: K) => V, size?: number) {
   const cache = new LRUCache<K, V>(size);
 
-  type Memoized<X = K, Y = V> = ((key: X) => Y) & Cache<X, Y>;
-  const get = ((key: K): V =>
-    cache.get(key).unwrapOrElse(() => cache.set(key, fn(key)))) as Memoized;
+  const get = ((key: K) => {
+    return cache.get(key).unwrapOrElse(() => cache.set(key, fn(key)));
+  }) as Memoized<K, V>;
 
   get.get = cache.get.bind(cache);
   get.set = cache.set.bind(cache);
