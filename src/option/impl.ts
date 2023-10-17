@@ -2,7 +2,7 @@ import { Some, None, Option, Result, Ok, Err } from '..';
 
 type VSome<T> = { value: T } & Some<T>;
 
-const makeSomeImpl = <T>(): Omit<Some<T>, 'value'> => ({
+const makeSomeImpl = <T>(): Some<T> => ({
   isSome: () => true,
   isSomeAnd(this: VSome<T>, fn: (val: T) => boolean) {
     return fn(this.value);

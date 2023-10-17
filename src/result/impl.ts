@@ -3,7 +3,7 @@ import { Ok, Err, Result, Option, None, Some } from '..';
 type VOk<T> = { result: T } & Ok<T>;
 type VErr<E> = { error: E } & Err<E>;
 
-const makeOkImpl = <T>(): Omit<Ok<T>, 'result'> => ({
+const makeOkImpl = <T>(): Ok<T> => ({
   isOk: () => true,
   isOkAnd(this: VOk<T>, fn: (val: T) => boolean) {
     return fn(this.result);
@@ -68,7 +68,7 @@ const makeOkImpl = <T>(): Omit<Ok<T>, 'result'> => ({
   },
 });
 
-const makeErrImpl = <E>(): Omit<Err<E>, 'error'> => ({
+const makeErrImpl = <E>(): Err<E> => ({
   isOk: () => false,
   isOkAnd: () => false,
   isErr: () => true,
