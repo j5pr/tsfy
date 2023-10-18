@@ -39,6 +39,12 @@ export function pipe<T>(value: T): Pipe<T> {
   return { next: (fn) => pipe(fn(value)), result: () => value };
 }
 
+/**
+ * Crate a new lazy pipe from a value. The functions passed to `next` will not
+ * be evaluated until `result` is called on the final pipe.
+ *
+ * @param value The initial value
+ */
 export function lazyPipe<T>(value: T): Pipe<T> {
   function createPipe<U, V>(transform: (value: U) => V, parent: Pipe<U>) {
     const pipe: Pipe<V> = {

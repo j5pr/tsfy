@@ -208,7 +208,7 @@ export interface Err<E> extends Res<never, E> {
 /**
  * `Result<T, E>` is the type used for returning and propagating errors.
  * It is a union with the variants, `Ok(T)`, representing success and containing a value,
- * and` Err(E)`, representing error and containing an error value.
+ * and `Err(E)`, representing error and containing an error value.
  */
 export type Result<T, E> = Ok<T> | Err<E>;
 

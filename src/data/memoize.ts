@@ -3,7 +3,12 @@ import { Cache, LRUCache } from '../index.js';
 /**
  * A memoized function, with the cache methods attached.
  */
-export type Memoized<K, V> = ((key: K) => V) & Cache<K, V>;
+export interface Memoized<K, V> extends Cache<K, V> {
+  /**
+   * Returns the value associated with the provided key.
+   */
+  (key: K): V;
+}
 
 /**
  * Memoizes a function using a `LRUCache`.
