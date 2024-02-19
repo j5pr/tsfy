@@ -1,6 +1,6 @@
 {
   "name": "tsfy",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "TypeScript For You: Useful type-safe utility functions and types",
   "author": "Brian Shao <brian@jzshao.com>",
   "license": "MIT",
