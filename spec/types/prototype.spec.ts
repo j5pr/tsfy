@@ -1,7 +1,7 @@
-import { extend } from '../../src/index.js';
+import { extend } from "../../src/core/index.js";
 
-describe('extend', () => {
-  it('should create an object with the correct properties', () => {
+describe("extend", () => {
+  it("should create an object with the correct properties", () => {
     const parent = { a: 1 };
     const obj = {
       b: {
@@ -21,7 +21,7 @@ describe('extend', () => {
     expect(result.c).toBe(3);
   });
 
-  it('should inherit properties from the parent object', () => {
+  it("should inherit properties from the parent object", () => {
     const parent = { a: 1 };
     const obj = {
       b: {
@@ -39,7 +39,7 @@ describe('extend', () => {
     expect(result.a).toBe(1);
   });
 
-  it('should allow properties to be overwritten', () => {
+  it("should allow properties to be overwritten", () => {
     const parent = { a: 1 };
     const obj = {
       a: {

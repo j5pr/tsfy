@@ -7,8 +7,6 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "esModuleInterop": true,
-    "rootDir": ".",
-    "outDir": "dist"
   },
   "include": ["src/**/*", "spec/**/*"],
   "exclude": ["node_modules"]

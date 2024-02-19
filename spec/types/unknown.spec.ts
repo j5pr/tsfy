@@ -1,24 +1,24 @@
-import { toUnknown, unknownList } from '../../src/index.js';
+import { unknown, unknownList } from "../../src/core/index.js";
 
-describe('toUnknown', () => {
-  it('should return the value as unknown', () => {
-    const value = 'hello';
-    const result = toUnknown(value);
+describe("toUnknown", () => {
+  it("should return the value as unknown", () => {
+    const value = "hello";
+    const result = unknown(value);
     expect(result).toBe(value);
   });
 });
 
-describe('unknownList', () => {
-  describe('when given a list of unknowns', () => {
-    it('should return the list as unknown', () => {
-      const list = [1, 'hello', true];
+describe("unknownList", () => {
+  describe("when given a collections of unknowns", () => {
+    it("should return the collections as unknown", () => {
+      const list = [1, "hello", true];
       const result = unknownList(list);
       expect(result).toBe(list);
     });
   });
 
-  describe('when given an undefined list', () => {
-    it('should return undefined', () => {
+  describe("when given an undefined collections", () => {
+    it("should return undefined", () => {
       const result = unknownList(undefined);
       expect(result).toBeUndefined();
     });
