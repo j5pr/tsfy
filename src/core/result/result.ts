@@ -212,10 +212,14 @@ export interface Err<E> extends Res<never, E> {
  */
 export type Result<T, E> = Ok<T> | Err<E>;
 
-export function Ok<T>(result: T): Ok<T> {
+export function Ok(): Ok<void>;
+export function Ok<T>(result: T): Ok<T>;
+export function Ok<T>(result?: T): Ok<T> {
   return { __proto__: okImpl, result } as unknown as Ok<T>;
 }
 
-export function Err<E>(error: E): Err<E> {
+export function Err(): Err<void>;
+export function Err<E>(error: E): Err<E>;
+export function Err<E>(error?: E): Err<E> {
   return { __proto__: errImpl, error } as unknown as Err<E>;
 }

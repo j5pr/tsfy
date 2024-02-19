@@ -200,9 +200,9 @@ export namespace Option {
   }
 }
 
-export function Some(): Some<undefined>;
+export function Some(): Some<void>;
 export function Some<T>(value: T): Some<T>;
-export function Some<T>(value = undefined): Some<T> {
+export function Some<T>(value?: T): Some<T> {
   return { __proto__: someImpl, value } as unknown as Some<T>;
 }
 
