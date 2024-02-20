@@ -1,4 +1,4 @@
-import { Hash } from "./hash.js";
+import { Hash } from "./hash.ts";
 
 export function cyrb128(str: string): Hash<4> {
   let h1 = 1779033703,

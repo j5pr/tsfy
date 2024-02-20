@@ -1,5 +1,5 @@
-import { Option, Some } from "../../core/index.js";
-import { Cache } from "./cache.js";
+import { Option, Some } from "../../core/index.ts";
+import { Cache } from "./cache.ts";
 
 /**
  * A simple unbounded cache implementation that uses a `Map`.

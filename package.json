@@ -80,6 +80,7 @@
     "prepack": "pnpm run build"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "^7.40.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",

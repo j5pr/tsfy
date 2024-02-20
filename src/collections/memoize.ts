@@ -1,6 +1,6 @@
-import { Cache } from "./index.js";
-import { LRUCache } from "./cache/lru.js";
-import { UnboundedCache } from "./cache/unbounded.js";
+import { Cache } from "./index.ts";
+import { LRUCache } from "./cache/lru.ts";
+import { UnboundedCache } from "./cache/unbounded.ts";
 
 /**
  * A memoized function, with the cache methods attached.

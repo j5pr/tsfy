@@ -1,2 +1,2 @@
-export * from "./marker/unreachable.js";
-export * from "./marker/phantom.js";
+export * from "./marker/unreachable.ts";
+export * from "./marker/phantom.ts";

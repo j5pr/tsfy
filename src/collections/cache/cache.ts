@@ -1,4 +1,4 @@
-import { Option } from "../../core/index.js";
+import { Option } from "../../core/index.ts";
 
 /**
  * A cache that stores key-value pairs.

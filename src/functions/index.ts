@@ -1,5 +1,5 @@
-export * from "./convert/collections.js";
+export * from "./convert/collections.ts";
 
-export * from "./utility/math.js";
+export * from "./utility/math.ts";
 
-export * from "./basic.js";
+export * from "./basic.ts";

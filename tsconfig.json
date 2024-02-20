@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "noEmit": true,
     "strict": true,
+    "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "esModuleInterop": true,
   },

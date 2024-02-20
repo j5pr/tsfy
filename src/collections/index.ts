@@ -1,7 +1,7 @@
-export * from "./cache/cache.js";
-export * from "./cache/lru.js";
-export * from "./cache/unbounded.js";
+export * from "./cache/cache.ts";
+export * from "./cache/lru.ts";
+export * from "./cache/unbounded.ts";
 
-export * from "./range/range.js";
+export * from "./range/range.ts";
 
-export * from "./memoize.js";
+export * from "./memoize.ts";

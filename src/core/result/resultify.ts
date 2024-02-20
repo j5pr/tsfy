@@ -1,4 +1,4 @@
-import { Err, Ok, Result } from "../index.js";
+import { Err, Ok, Result } from "../index.ts";
 
 /**
  * Wrap a function that throws an error in a Result

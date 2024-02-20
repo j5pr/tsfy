@@ -13,7 +13,10 @@ export default defineConfig({
     "src/random/index.ts",
     "src/types/index.ts",
   ],
-  dts: true,
+  dts: {
+    resolve: true,
+  },
+  splitting: true,
   sourcemap: true,
   esbuildOptions(options) {
     options.sourcesContent = false;

@@ -1,8 +1,8 @@
-export * from "./option/option.js";
+export * from "./option/option.ts";
 
-export * from "./result/result.js";
-export * from "./result/resultify.js";
+export * from "./result/result.ts";
+export * from "./result/resultify.ts";
 
-export * from "./types/pipe.js";
-export * from "./types/prototype.js";
-export * from "./types/unknown.js";
+export * from "./types/pipe.ts";
+export * from "./types/prototype.ts";
+export * from "./types/unknown.ts";
