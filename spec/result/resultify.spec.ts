@@ -1,4 +1,4 @@
-import { Ok, Err, resultify, resultifyAsync } from "../../src/core/index.js";
+import { Ok, Err, resultify, resultifyAsync } from "tsfy";
 
 describe("resultify", () => {
   it("should return Ok if the function does not throw an error", () => {

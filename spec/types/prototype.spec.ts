@@ -1,4 +1,4 @@
-import { extend } from "../../src/core/index.js";
+import { extend } from "tsfy";
 
 describe("extend", () => {
   it("should create an object with the correct properties", () => {

@@ -1,4 +1,4 @@
-import { asyncPipe, lazyPipe, pipe } from "../../src/core/index.js";
+import { asyncPipe, lazyPipe, pipe } from "tsfy";
 
 describe("pipe", () => {
   describe("pipe", () => {

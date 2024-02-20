@@ -1,4 +1,4 @@
-import { clamp, scale } from "../../src/functions/index.js";
+import { clamp, scale } from "tsfy/fn";
 
 describe("math functions", () => {
   describe("clamp", () => {

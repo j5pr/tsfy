@@ -1,4 +1,4 @@
-import { unreachable } from "../../src/types/index.js";
+import { unreachable } from "tsfy/types";
 
 function stringify(n: number): string {
   switch (n) {

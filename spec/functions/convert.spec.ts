@@ -1,4 +1,4 @@
-import { set, map, list } from "../../src/functions/index.js";
+import { set, map, list } from "tsfy/fn";
 
 describe("Constructors", () => {
   it("should construct a list", () => {

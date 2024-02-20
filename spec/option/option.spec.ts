@@ -1,4 +1,4 @@
-import { Err, Ok, Result, Option, Some, None } from "../../src/core/index.js";
+import { Err, Ok, Result, Option, Some, None } from "tsfy";
 
 describe("Option", () => {
   describe("Some", () => {

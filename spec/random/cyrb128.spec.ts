@@ -1,4 +1,4 @@
-import { cyrb128 } from "../../src/random/index.js";
+import { cyrb128 } from "tsfy/random";
 
 describe("cyrb128", () => {
   it("should return the correct hash", () => {

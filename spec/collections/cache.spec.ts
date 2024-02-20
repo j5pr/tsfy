@@ -1,5 +1,5 @@
-import { Some, None } from "../../src/core/index.js";
-import { LRUCache, UnboundedCache } from "../../src/collections/index.js";
+import { Some, None } from "tsfy";
+import { LRUCache, UnboundedCache } from "tsfy/collections";
 
 describe("LRUCache", () => {
   it("should set and get values correctly", () => {

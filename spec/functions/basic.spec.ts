@@ -1,4 +1,4 @@
-import { noop, identity, cast } from "../../src/functions/index.js";
+import { noop, identity, cast } from "tsfy/fn";
 
 describe("basic functions", () => {
   it("should return undefined", () => {

@@ -1,4 +1,4 @@
-import { unknown, unknownList } from "../../src/core/index.js";
+import { unknown, unknownList } from "tsfy";
 
 describe("toUnknown", () => {
   it("should return the value as unknown", () => {

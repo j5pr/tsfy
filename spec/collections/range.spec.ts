@@ -1,4 +1,4 @@
-import { range } from "../../src/collections/index.js";
+import { range } from "tsfy/collections";
 
 describe("range", () => {
   it("should work with one parameter", () => {

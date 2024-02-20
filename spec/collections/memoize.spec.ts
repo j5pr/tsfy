@@ -1,4 +1,4 @@
-import { memoize } from "../../src/collections/index.js";
+import { memoize, UnboundedCache } from "tsfy/collections";
 
 describe("memoize", () => {
   it("should memoize a function", () => {
@@ -25,7 +25,7 @@ describe("memoize", () => {
 
   it("should clear the cache", () => {
     const fn = jest.fn((x: number) => x * 2);
-    const memoizedFn = memoize(fn, null);
+    const memoizedFn = memoize(fn, new UnboundedCache());
 
     expect(memoizedFn(2)).toBe(4);
     expect(fn).toHaveBeenCalledTimes(1);
