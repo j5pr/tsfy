@@ -39,7 +39,7 @@
         "default": "./dist/collections/index.cjs"
       }
     },
-    "./functions": {
+    "./fn": {
       "import": {
         "types": "./dist/functions/index.d.ts",
         "default": "./dist/functions/index.js"
