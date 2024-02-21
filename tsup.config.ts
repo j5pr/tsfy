@@ -18,6 +18,8 @@ export default defineConfig({
   },
   splitting: true,
   sourcemap: true,
+  shims: true,
+  treeshake: true,
   esbuildOptions(options) {
     options.sourcesContent = false;
   },

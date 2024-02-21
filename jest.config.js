@@ -14,7 +14,6 @@ export default {
   },
   moduleNameMapper: {
     "^tsfy$": path.resolve(__dirname, "src", "core"),
-    "^tsfy/fn$": path.resolve(__dirname, "src", "functions"),
     "^tsfy(.*)$": path.join(path.resolve(__dirname, "src"), "$1"),
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
