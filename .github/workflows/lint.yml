@@ -19,6 +19,7 @@ jobs:
           node-version: 18.x
           cache: 'pnpm'
       - run: pnpm install
+      - run: pnpm build
       - name: ESLint
         run: pnpm run lint:eslint
       - name: Typecheck
