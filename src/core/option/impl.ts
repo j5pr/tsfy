@@ -1,8 +1,8 @@
 import { Some, None, Option, Result, Ok, Err } from "../index.ts";
 
-type VSome<T> = { value: T } & Some<T>;
+type VSome<T> = { value: T } & Option<T>;
 
-const makeSomeImpl = <T>(): Some<T> => ({
+const makeSomeImpl = <T>(): Option<T> => ({
   isSome: () => true,
   isSomeAnd(this: VSome<T>, fn: (val: T) => boolean) {
     return fn(this.value);
@@ -30,7 +30,7 @@ const makeSomeImpl = <T>(): Some<T> => ({
   okOrElse(this: VSome<T>) {
     return Ok(this.value);
   },
-  transpose<U, E>(this: VSome<Result<U, E>>): Result<Some<U>, E> {
+  transpose<U, E>(this: VSome<Result<U, E>>) {
     const value = this.value;
     return value.isOk() ? Ok(Some(value.unwrap())) : Err(value.unwrapErr());
   },
@@ -52,21 +52,33 @@ const makeSomeImpl = <T>(): Some<T> => ({
   and<U>(other: Option<U>): Option<U> {
     return other;
   },
-  or(this: Some<T>) {
+  or(this: Option<T>) {
     return this;
   },
-  xor<U>(this: Some<T>, other: Option<U>) {
+  xor<U>(this: Option<T>, other: Option<U>) {
     return other.isSome() ? None : this;
   },
   andThen<U>(this: VSome<T>, fn: (val: T) => Option<U>) {
     return fn(this.value);
   },
-  orElse(this: Some<T>) {
+  orElse(this: Option<T>) {
     return this;
+  },
+  [Symbol.iterator](this: VSome<T>) {
+    const isIterable = <U>(x: unknown): x is Iterable<U> =>
+      typeof x === "object" && x !== null && Symbol.iterator in x;
+
+    return isIterable<T extends Iterable<infer U> ? U : never>(this.value)
+      ? this.value[Symbol.iterator]()
+      : {
+          next(): IteratorResult<never, never> {
+            return { done: true, value: undefined! };
+          },
+        };
   },
 });
 
-const makeNoneImpl = (): None => ({
+const makeNoneImpl = (): Option<never> => ({
   isSome: () => false,
   isSomeAnd: () => false,
   isNone: () => true,
@@ -92,6 +104,13 @@ const makeNoneImpl = (): None => ({
   xor: <T>(other: Option<T>) => other,
   andThen: () => None,
   orElse: <U>(fn: () => Option<U>) => fn(),
+  [Symbol.iterator]() {
+    return {
+      next(): IteratorResult<never, never> {
+        return { done: true, value: undefined! };
+      },
+    };
+  },
 });
 
 export const someImpl = Object.freeze(makeSomeImpl<unknown>());

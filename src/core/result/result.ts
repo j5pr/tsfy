@@ -1,11 +1,16 @@
-import { None, Option, Some } from "../index.ts";
+import { Option } from "../index.ts";
 import { okImpl, errImpl } from "./impl.ts";
 
-interface Res<T, E> {
+/**
+ * `Result<T, E>` is the type used for returning and propagating errors.
+ * It is a union with the variants, `Ok(T)`, representing success and containing a value,
+ * and `Err(E)`, representing error and containing an error value.
+ */
+export interface Result<T, E> {
   /**
    * Returns `true` if the result is `Ok`.
    */
-  isOk(): this is Ok<T>;
+  isOk(): boolean;
 
   /**
    * Returns `true` if the result is `Ok` and the value inside of it matches a predicate.
@@ -16,13 +21,13 @@ interface Res<T, E> {
   /**
    * Returns `true` if the result is `Err`.
    */
-  isErr(): this is Err<E>;
+  isErr(): boolean;
 
   /**
    * Returns `true` if the result is `Err` and the value inside of it matches a predicate.
    * @param fn The predicate function
    */
-  isErrAnd(fn: (val: E) => boolean): this is Err<E>;
+  isErrAnd(fn: (val: E) => boolean): boolean;
 
   /**
    * Returns the contained `Ok` value, throwing if the value is an `Err` with a custom error.
@@ -86,7 +91,7 @@ interface Res<T, E> {
    * `Ok(None)` will be mapped to `None`. `Ok(Some(_))` and
    * `Err(_)` will be mapped to `Some(Ok(_))` and `Some(Err(_))`.
    */
-  transpose<U extends T>(this: Result<Option<U>, E>): Option<Result<U, E>>;
+  transpose<U>(this: Result<Option<U>, E>): Option<Result<U, E>>;
 
   /**
    * Maps a `Result<T, E>` to `Result<U, E>` by applying a function
@@ -144,7 +149,7 @@ interface Res<T, E> {
   andThen<U>(fn: (val: T) => Result<U, E>): Result<T | U, E>;
 
   /**
-   * Calls op if the result is `Err`, otherwise returns the `Ok` value of self.
+   * Calls `fn` if the result is `Err`, otherwise returns the `Ok` value of self.
    *
    * This function can be used for control flow based on result values.
    * @param fn The function to call
@@ -152,74 +157,14 @@ interface Res<T, E> {
   orElse<F>(fn: () => Result<T, F>): Result<T, E | F>;
 }
 
-/**
- * Contains the success value of type `T`.
- */
-export interface Ok<T> extends Res<T, never> {
-  expectErr(err: unknown): never;
-  unwrapErr(): never;
-  unwrapOr<U>(def: U): T;
-  unwrapOrElse<U>(fn: () => U): T;
-  inspect(fn: (val: T) => void): Ok<T>;
-  inspectErr(fn: (val: never) => void): Ok<T>;
-
-  err(): None;
-  ok(): Some<T>;
-  transpose<U>(this: Result<Option<U>, unknown>): Option<Ok<U>>;
-
-  map<U>(fn: (val: T) => U): Ok<U>;
-  mapErr<F>(fn: (val: never) => F): Ok<T>;
-
-  and<U, F>(other: Result<U, F>): Result<U, F>;
-  or<F>(other: Result<T, F>): Ok<T>;
-
-  andThen<U, F>(fn: (val: T) => Result<U, F>): Result<U, F>;
-  orElse<U, F>(fn: () => Result<U, F>): Ok<T>;
+export function Ok(): Result<void, never>;
+export function Ok<T>(result: T): Result<T, never>;
+export function Ok<T>(result?: T): Result<T, never> {
+  return { __proto__: okImpl, result } as unknown as Result<T, never>;
 }
 
-/**
- * Contains the error value of type `E`.
- */
-export interface Err<E> extends Res<never, E> {
-  expect(err: unknown): never;
-  unwrap(): never;
-  unwrapErr(): E;
-  unwrapOr<U>(def: U): U;
-  unwrapOrElse<U>(fn: () => U): U;
-  inspect(fn: (val: never) => void): Err<E>;
-  inspectErr(fn: (val: E) => void): Err<E>;
-
-  err(): Some<E>;
-  ok(): None;
-  transpose(this: Result<Option<unknown>, E>): Some<Err<E>>;
-
-  map<U>(fn: (val: never) => U): Err<E>;
-  mapErr<F>(fn: (val: E) => F): Result<never, F>;
-  mapOr<U>(def: U, fn: (val: never) => U): U;
-  mapOrElse<U>(def: () => U, fn: (val: never) => U): U;
-
-  and<U>(other: Result<U, E>): Err<E>;
-  or<T, F>(other: Result<T, F>): Result<T, F>;
-
-  andThen<U, F>(fn: (val: never) => Result<U, F>): Err<E>;
-  orElse<U, F>(fn: () => Result<U, F>): Result<U, F>;
-}
-
-/**
- * `Result<T, E>` is the type used for returning and propagating errors.
- * It is a union with the variants, `Ok(T)`, representing success and containing a value,
- * and `Err(E)`, representing error and containing an error value.
- */
-export type Result<T, E> = Ok<T> | Err<E>;
-
-export function Ok(): Ok<void>;
-export function Ok<T>(result: T): Ok<T>;
-export function Ok<T>(result?: T): Ok<T> {
-  return { __proto__: okImpl, result } as unknown as Ok<T>;
-}
-
-export function Err(): Err<void>;
-export function Err<E>(error: E): Err<E>;
-export function Err<E>(error?: E): Err<E> {
-  return { __proto__: errImpl, error } as unknown as Err<E>;
+export function Err(): Result<never, void>;
+export function Err<E>(error: E): Result<never, E>;
+export function Err<E>(error?: E): Result<never, E> {
+  return { __proto__: errImpl, error } as unknown as Result<never, E>;
 }

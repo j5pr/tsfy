@@ -1,9 +1,9 @@
 import { Ok, Err, Result, Option, None, Some } from "../index.ts";
 
-type VOk<T> = { result: T } & Ok<T>;
-type VErr<E> = { error: E } & Err<E>;
+type VOk<T> = { result: T } & Result<T, never>;
+type VErr<E> = { error: E } & Result<never, E>;
 
-const makeOkImpl = <T>(): Ok<T> => ({
+const makeOkImpl = <T>(): Result<T, never> => ({
   isOk: () => true,
   isOkAnd(this: VOk<T>, fn: (val: T) => boolean) {
     return fn(this.result);
@@ -39,10 +39,10 @@ const makeOkImpl = <T>(): Ok<T> => ({
   ok(this: VOk<T>) {
     return Some(this.result);
   },
-  transpose<U>(this: VOk<Option<U>>): Option<Ok<U>> {
+  transpose<U>(this: VOk<Option<U>>) {
     return this.result.isSome() ? Some(Ok(this.result.unwrap())) : None;
   },
-  map<U>(this: VOk<T>, fn: (val: T) => U): Ok<U> {
+  map<U>(this: VOk<T>, fn: (val: T) => U) {
     return Ok(fn(this.result));
   },
   mapErr(this: VOk<T>) {
@@ -68,7 +68,7 @@ const makeOkImpl = <T>(): Ok<T> => ({
   },
 });
 
-const makeErrImpl = <E>(): Err<E> => ({
+const makeErrImpl = <E>(): Result<never, E> => ({
   isOk: () => false,
   isOkAnd: () => false,
   isErr: () => true,
@@ -104,7 +104,7 @@ const makeErrImpl = <E>(): Err<E> => ({
     return Some(this.error);
   },
   ok: () => None,
-  transpose(this: VErr<E>): Some<Err<E>> {
+  transpose(this: VErr<E>) {
     return Some(Err(this.error));
   },
   map(this: VErr<E>) {

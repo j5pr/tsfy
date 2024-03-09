@@ -9,7 +9,7 @@ export default defineConfig({
   entry: [
     "src/collections/index.ts",
     "src/core/index.ts",
-    "src/functions/index.ts",
+    "src/fn/index.ts",
     "src/random/index.ts",
     "src/types/index.ts",
   ],

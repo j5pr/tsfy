@@ -1,11 +1,16 @@
-import { Ok, Result } from "../index.ts";
+import { Result } from "../index.ts";
 import { someImpl, noneImpl } from "./impl.ts";
 
-interface Opt<T> {
+/**
+ * Type `Option` represents an optional value: every `Option` is
+ * either `Some` and contains a value, or `None`, and does not.
+ */
+export interface Option<out T>
+  extends Iterable<T extends Iterable<infer U> ? U : never> {
   /**
    * Returns true if the option is a `Some` value.
    */
-  isSome(): this is Some<T>;
+  isSome(): boolean;
 
   /**
    * Returns true if the option is a `Some` and the value inside of it matches a predicate.
@@ -15,7 +20,7 @@ interface Opt<T> {
   /**
    * Returns true if the option is a `None` value.
    */
-  isNone(): this is None;
+  isNone(): boolean;
 
   /**
    * Returns the contained `Some` value, throwing if the value is a `None` with a custom error.
@@ -141,69 +146,19 @@ interface Opt<T> {
 }
 
 /**
- * Some value of type `T`.
+ * Create an `Option<T>` from `T | null | undefined`, returning `None` if the value
+ * is `null` or `undefined`, otherwise returns `Some<T>`.
+ * @param value The value to convert
+ * @returns An `Option<T>`
  */
-export interface Some<T> extends Opt<T> {
-  unwrapOr<U>(def: U): T;
-  unwrapOrElse<U>(fn: () => U): T;
-  inspect(fn: (val: T) => void): Some<T>;
-
-  okOr<E>(err: E): Ok<T>;
-  okOrElse<E>(err: () => E): Ok<T>;
-  transpose<U, E>(this: Some<Result<U, E>>): Result<Some<U>, E>;
-
-  map<U>(fn: (val: T) => U): Some<U>;
-
-  orElse(fn: () => Option<T>): Some<T>;
+export function opt<T>(value: T | null | undefined): Option<NonNullable<T>> {
+  return value === null || value === undefined ? None : Some(value);
 }
 
-/**
- * No value.
- */
-export interface None extends Opt<never> {
-  expect(err: unknown): never;
-
-  unwrap(): never;
-  unwrapOr<U>(def: U): U;
-  unwrapOrElse<U>(fn: () => U): U;
-  inspect(fn: (val: never) => void): None;
-
-  okOr<E>(err: E): Result<never, E>;
-  okOrElse<E>(err: () => E): Result<never, E>;
-  transpose(): Ok<None>;
-
-  filter(fn: (val: never) => boolean): None;
-  flatten(): None;
-  map<U>(fn: (val: never) => U): None;
-
-  and<U>(other: Option<U>): None;
-
-  andThen<U>(fn: (val: never) => Option<U>): None;
-  orElse<U>(fn: () => Option<U>): Option<U>;
+export function Some(): Option<void>;
+export function Some<T>(value: T): Option<T>;
+export function Some<T>(value?: T): Option<T> {
+  return { __proto__: someImpl, value } as unknown as Option<T>;
 }
 
-/**
- * Type `Option` represents an optional value: every `Option` is
- * either `Some` and contains a value, or `None`, and does not.
- */
-export type Option<T> = Some<T> | None;
-
-export namespace Option {
-  /**
-   * Create an `Option<T>` from `T | null | undefined`, returning `None` if the value
-   * is `null` or `undefined`, otherwise returns `Some<T>`.
-   * @param value The value to convert
-   * @returns An `Option<T>`
-   */
-  export function from<T>(value: T | null | undefined): Option<NonNullable<T>> {
-    return value === null || value === undefined ? None : Some(value);
-  }
-}
-
-export function Some(): Some<void>;
-export function Some<T>(value: T): Some<T>;
-export function Some<T>(value?: T): Some<T> {
-  return { __proto__: someImpl, value } as unknown as Some<T>;
-}
-
-export const None: None = noneImpl;
+export const None = noneImpl;

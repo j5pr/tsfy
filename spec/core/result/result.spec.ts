@@ -1,4 +1,4 @@
-import { None, Some, Ok, Err } from "tsfy";
+import { None, Some, Ok, Err, Result } from "tsfy";
 
 describe("Result", () => {
   describe("Ok", () => {
@@ -251,8 +251,8 @@ describe("Result", () => {
     });
 
     it("should combine with another Result using orElse()", () => {
-      const result = Err("error");
-      const combined = result.orElse(() => Ok(42));
+      const result: Result<number, string> = Err("error");
+      const combined = result.orElse<number>(() => Ok(42));
       expect(combined.unwrap()).toEqual(42);
     });
 

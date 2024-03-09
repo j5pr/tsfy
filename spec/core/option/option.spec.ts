@@ -4,6 +4,7 @@ describe("Option", () => {
   describe("Some", () => {
     it("should create a Some with a value", () => {
       const some: Option<number> = Some(42);
+
       expect(some.isSome()).toBe(true);
       expect(some.isNone()).toBe(false);
       expect(some.unwrap()).toBe(42);
@@ -138,6 +139,27 @@ describe("Option", () => {
       const result: Result<Option<number>, string> = some.transpose();
       expect(result).toEqual(Err("error message"));
     });
+
+    it("should iterate over underlying values", () => {
+      const some: Option<number[]> = Some([42, 43]);
+
+      const collect = [];
+
+      for (const value of some) {
+        collect.push(value);
+      }
+
+      expect(collect).toEqual([42, 43]);
+    });
+
+    it("should not produce any values", () => {
+      const some = Some(42);
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      for (const _ of some) {
+        throw new Error("This should not be called");
+      }
+    });
   });
 
   describe("None", () => {
@@ -145,7 +167,7 @@ describe("Option", () => {
       const none: Option<number> = None;
       expect(none.isSome()).toBe(false);
       expect(none.isNone()).toBe(true);
-      expect(() => none.unwrap()).toThrowError();
+      expect(() => none.unwrap()).toThrow();
     });
 
     it("should return the default value if unwrapOr() is called", () => {
@@ -159,7 +181,8 @@ describe("Option", () => {
 
     it("should return the result of the function if orElse() is called", () => {
       const other: Option<number> = Some(99);
-      expect(None.orElse(() => other)).toBe(other);
+      const none: Option<number> = None;
+      expect(none.orElse(() => other)).toBe(other);
     });
 
     it("should return false when isSomeAnd() is called", () => {
@@ -171,11 +194,11 @@ describe("Option", () => {
     });
 
     it("should throw an error when expect() is called", () => {
-      expect(() => None.expect("error message")).toThrowError("error message");
+      expect(() => None.expect("error message")).toThrow("error message");
     });
 
     it("should throw an error when unwrap() is called", () => {
-      expect(() => None.unwrap()).toThrowError();
+      expect(() => None.unwrap()).toThrow();
     });
 
     it("should call the function when inspect() is called", () => {

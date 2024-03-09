@@ -1,6 +1,6 @@
 {
   "name": "tsfy",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "TypeScript For You: Useful type-safe utility functions and types",
   "author": "Brian Shao <brian@jzshao.com>",
   "license": "MIT",
@@ -41,12 +41,12 @@
     },
     "./fn": {
       "import": {
-        "types": "./dist/functions/index.d.ts",
-        "default": "./dist/functions/index.js"
+        "types": "./dist/fn/index.d.ts",
+        "default": "./dist/fn/index.js"
       },
       "require": {
-        "types": "./dist/functions/index.d.cts",
-        "default": "./dist/functions/index.cjs"
+        "types": "./dist/fn/index.d.cts",
+        "default": "./dist/fn/index.cjs"
       }
     },
     "./random": {
